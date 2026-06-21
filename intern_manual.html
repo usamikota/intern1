@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>skyer インターン 案件選定マニュアル</title>
+  <style>
+    :root {
+      --primary: #1a3a5c;
+      --secondary: #2d7dd2;
+      --accent: #f4a261;
+      --success: #2ecc71;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --bg: #f5f7fa;
+      --bg2: #ffffff;
+      --bg3: #eef2f7;
+      --text: #1a2840;
+      --text2: #5a7085;
+      --border: #d0dce8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%);
+      color: white;
+      padding: 28px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: '🚁';
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 5em;
+      opacity: 0.12;
+    }
+    .header-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #1a2840;
+      font-size: 0.72em;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .header h1 { font-size: 1.7em; font-weight: 800; }
+    .header .sub { color: #9ab0c8; font-size: 0.88em; margin-top: 6px; }
+    .header .date { color: var(--accent); font-size: 0.78em; margin-top: 4px; }
+
+    /* タブ */
+    .tabs {
+      display: flex;
+      background: var(--primary);
+      overflow-x: auto;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .tab-btn {
+      padding: 13px 20px;
+      background: none;
+      border: none;
+      color: #9ab0c8;
+      cursor: pointer;
+      font-size: 0.85em;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    .tab-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-content { display: none; padding: 28px 32px; max-width: 960px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    /* カード */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .card-title {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--bg3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon { font-size: 1.2em; }
+
+    /* 見出しラベル */
+    .label {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .label-blue { background: #dbeafe; color: #1d4ed8; }
+    .label-green { background: #d1fae5; color: #065f46; }
+    .label-orange { background: #ffedd5; color: #9a3412; }
+    .label-red { background: #fee2e2; color: #991b1b; }
+    .label-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* 製品カード */
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .product-grid { grid-template-columns: 1fr; } }
+    .product-card {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--secondary);
+    }
+    .product-card.kemono { border-left-color: #059669; }
+    .product-name { font-size: 1.05em; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+    .product-desc { font-size: 0.86em; color: var(--text2); line-height: 1.75; }
+    .product-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin: 4px 2px 0;
+      color: var(--text2);
+    }
+
+    /* 実績カード */
+    .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .track-grid { grid-template-columns: 1fr; } }
+    .track-card {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .track-num {
+      width: 28px; height: 28px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 0.85em;
+      margin-bottom: 10px;
+    }
+    .track-name { font-weight: 700; font-size: 0.95em; color: var(--primary); margin-bottom: 6px; }
+    .track-detail { font-size: 0.82em; color: var(--text2); line-height: 1.7; }
+
+    /* フローステップ */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--bg3);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--secondary);
+    }
+    .flow-step.done { border-left-color: var(--success); }
+    .flow-step.warn { border-left-color: var(--warning); }
+    .flow-num {
+      width: 32px; height: 32px; min-width: 32px;
+      background: var(--secondary);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 0.9em;
+    }
+    .flow-step.done .flow-num { background: var(--success); }
+    .flow-step.warn .flow-num { background: var(--warning); }
+    .flow-label { font-weight: 700; font-size: 0.95em; margin-bottom: 4px; }
+    .flow-desc { font-size: 0.84em; color: var(--text2); line-height: 1.7; }
+    .flow-time { font-size: 0.78em; color: var(--warning); font-weight: 700; white-space: nowrap; margin-left: auto; min-width: 60px; text-align: right; }
+
+    /* スクリーニング */
+    .screen-question {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .screen-q-num {
+      display: inline-block;
+      background: var(--secondary);
+      color: white;
+      font-weight: 800;
+      font-size: 0.8em;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .screen-q-text { font-weight: 700; font-size: 0.95em; margin-bottom: 10px; }
+    .screen-options { display: flex; flex-direction: column; gap: 7px; }
+    .screen-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.87em;
+      text-align: left;
+      transition: all 0.15s;
+      font-family: inherit;
+      color: var(--text);
+    }
+    .screen-opt:hover { border-color: var(--secondary); background: #eff6ff; }
+    .screen-opt.selected-go { border-color: var(--success); background: #d1fae5; }
+    .screen-opt.selected-mid { border-color: var(--warning); background: #fef3c7; }
+    .screen-opt.selected-ng { border-color: var(--danger); background: #fee2e2; }
+    .screen-score { font-weight: 800; font-size: 1.1em; margin-right: 4px; }
+    .result-box {
+      margin-top: 20px;
+      padding: 20px 22px;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid var(--border);
+      background: var(--bg3);
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    /* NG条件表 */
+    .ng-table { width: 100%; border-collapse: collapse; font-size: 0.86em; }
+    .ng-table th {
+      background: var(--primary);
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .ng-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .ng-table tr:last-child td { border-bottom: none; }
+    .ng-table tr:hover td { background: var(--bg3); }
+    .ng-tag {
+      display: inline-block;
+      font-size: 0.8em;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .ng-tag-hard { background: #fee2e2; color: #991b1b; }
+    .ng-tag-soft { background: #fef3c7; color: #92400e; }
+
+    /* 報告テンプレ */
+    .template-box {
+      background: #1a2840;
+      color: #e8eef4;
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.84em;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: var(--accent);
+      color: #1a2840;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78em;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .copy-btn:hover { opacity: 0.85; }
+
+    /* ヒント */
+    .tip {
+      background: #eff6ff;
+      border-left: 4px solid var(--secondary);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.86em;
+      margin: 12px 0;
+      color: #1e40af;
+    }
+    .warn-box {
+      background: #fffbeb;
+      border-left: 4px solid var(--warning);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.86em;
+      margin: 12px 0;
+      color: #92400e;
+    }
+    .danger-box {
+      background: #fff5f5;
+      border-left: 4px solid var(--danger);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.86em;
+      margin: 12px 0;
+      color: #991b1b;
+    }
+
+    /* ドメイン一覧 */
+    .domain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 600px) { .domain-grid { grid-template-columns: repeat(2, 1fr); } }
+    .domain-card {
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-align: center;
+      font-size: 0.86em;
+      font-weight: 700;
+    }
+    .domain-card.go { background: #d1fae5; color: #065f46; }
+    .domain-card.mid { background: #fef3c7; color: #92400e; }
+    .domain-card.ng { background: #fee2e2; color: #991b1b; }
+    .domain-label { font-size: 0.75em; font-weight: 400; margin-top: 3px; color: inherit; opacity: 0.8; }
+
+    /* チェックリスト */
+    .checklist { list-style: none; }
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88em;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '☐';
+      font-size: 1.1em;
+      color: var(--secondary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* FAQ */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .faq-q {
+      padding: 13px 16px;
+      font-weight: 700;
+      font-size: 0.9em;
+      cursor: pointer;
+      background: var(--bg3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .faq-q::after { content: '▼'; font-size: 0.75em; color: var(--text2); transition: transform 0.2s; }
+    .faq-q.open::after { transform: rotate(180deg); }
+    .faq-a {
+      padding: 14px 16px;
+      font-size: 0.87em;
+      line-height: 1.8;
+      display: none;
+      color: var(--text2);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ページ内リンク */
+    a.anchor-link { color: var(--secondary); text-decoration: none; }
+    a.anchor-link:hover { text-decoration: underline; }
+
+    /* big stat */
+    .stat-row { display: flex; gap: 14px; margin-bottom: 16px; }
+    .stat-card {
+      flex: 1;
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .stat-num { font-size: 2em; font-weight: 900; color: var(--accent); }
+    .stat-label { font-size: 0.76em; color: #9ab0c8; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="header-badge">INTERN MANUAL v1.0</div>
+  <h1>案件選定 スタートアップガイド</h1>
+  <div class="sub">株式会社skyer — インターン向け 作業手順書 ＆ 初回説明資料</div>
+  <div class="date">作成: 2026年6月21日 ／ 担当: 宇佐美孝太（CEO）</div>
+</div>
+
+<!-- タブ -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('intro',this)">👋 はじめに</button>
+  <button class="tab-btn" onclick="switchTab('company',this)">🏢 会社・製品</button>
+  <button class="tab-btn" onclick="switchTab('work',this)">📋 作業手順</button>
+  <button class="tab-btn" onclick="switchTab('screening',this)">🎯 選定基準</button>
+  <button class="tab-btn" onclick="switchTab('report',this)">📤 報告方法</button>
+  <button class="tab-btn" onclick="switchTab('faq',this)">❓ FAQ</button>
+</div>
+
+<!-- ========== TAB 1: はじめに ========== -->
+<div id="tab-intro" class="tab-content active">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">👋</span> ようこそ、skyerへ！</div>
+    <p style="margin-bottom:14px;">今日からお願いする仕事は <strong>「全国の補助金・OI（オープンイノベーション）・実証支援プログラムをリサーチして、skyerが応募すべき案件を選んでもらう」</strong> ことです。</p>
+    <p style="font-size:0.88em;color:var(--text2);">難しいことは一切ありません。このマニュアルに書かれた手順と基準に沿って作業すれば、誰でもできます。まず<strong>「会社・製品」タブ</strong>でskyerのことを10分で理解して、あとは<strong>「作業手順」タブ</strong>の通りに動いてください。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📌</span> この仕事が重要な理由</div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">全国の応募可能プログラム数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5分</div>
+        <div class="stat-label">1案件の選定にかかる時間（目標）</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">月20件</div>
+        <div class="stat-label">エントリー目標（選定次第）</div>
+      </div>
+    </div>
+    <p style="font-size:0.86em;color:var(--text2);">補助金・OI採択は <strong>会社の資金調達＆販路開拓に直結</strong> します。全国に毎月100件以上の新規プログラムが公募されますが、CEOひとりでは追いきれません。インターンが「これは使える」「これは違う」と仕分けするだけで、会社のエントリー件数が劇的に増え、採択確率が上がります。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span> 全体の流れ（俯瞰図）</div>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div style="flex:1;">
+        <div class="flow-label">会社・製品を理解する</div>
+        <div class="flow-desc">「会社・製品」タブを読む。skyerが何をやっている会社か、何を強みとしているかを把握する（10分）</div>
+      </div>
+      <div class="flow-time">🏢 タブ2</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div style="flex:1;">
+        <div class="flow-label">案件を見つける</div>
+        <div class="flow-desc">毎日確認トラッカー（★毎日確認_PoCリサーチ.html）またはネット検索で新着プログラムを発掘する</div>
+      </div>
+      <div class="flow-time">📋 タブ3</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div style="flex:1;">
+        <div class="flow-label">5問で選定（Go / No-Go）</div>
+        <div class="flow-desc">「選定基準」タブの5問チェックを使い、スコアを出してGoかNo-Goを決める。13点以上＝即Go</div>
+      </div>
+      <div class="flow-time">🎯 タブ4</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div style="flex:1;">
+        <div class="flow-label">宇佐美さんに報告</div>
+        <div class="flow-desc">「報告方法」タブのテンプレートを使って選定結果をまとめてSlack/メールで送る</div>
+      </div>
+      <div class="flow-time">📤 タブ5</div>
+    </div>
+    <div class="flow-step done">
+      <div class="flow-num">✓</div>
+      <div style="flex:1;">
+        <div class="flow-label" style="color:var(--success);">宇佐美さんが提案書を作成・提出</div>
+        <div class="flow-desc">選定した案件をCEOが提案書に仕上げてエントリー。インターンは次の案件へ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>重要：</strong> あなたが提案書を書く必要は<strong>ありません</strong>。案件をリサーチして「これGoです」「これはNo-Goです」と報告するだけでOKです。提案書はCEOとClaudeが作ります。
+  </div>
+
+</div>
+
+<!-- ========== TAB 2: 会社・製品 ========== -->
+<div id="tab-company" class="tab-content">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏢</span> 会社概要</div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.88em;">
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;color:var(--text2);width:30%;border-bottom:1px solid var(--border);">会社名</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">株式会社skyer（スカイアー）</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;color:var(--text2);border-bottom:1px solid var(--border);">本社</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">鳥取県</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;color:var(--text2);border-bottom:1px solid var(--border);">事業内容</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">ドローンを活用した鳥獣害対策・安全管理・物流支援と、AI出没予測プラットフォームの開発・運用</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;color:var(--text2);border-bottom:1px solid var(--border);">代表</td>
+        <td style="padding:8px 12px;border-bottom:1px solid var(--border);">宇佐美孝太（CEO）</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;color:var(--text2);">強みのひとこと</td>
+        <td style="padding:8px 12px;"><strong>「実証実験ではなく、6年間の現場実運用実績があるドローン事業者」</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📦</span> 主力製品・サービス</div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-name">🐕 SKY DOG</div>
+        <div class="product-desc">
+          ドローンによる鳥獣の<strong>生息域調査・追い払い・重量物運搬</strong>を統合したサービス。鳥取砂丘の観光警備でも6年運用実績あり。自治体向けに年間契約で提供。
+        </div>
+        <div style="margin-top:10px;">
+          <span class="product-tag">ドローン運用</span>
+          <span class="product-tag">鳥獣害対策</span>
+          <span class="product-tag">農地保護</span>
+          <span class="product-tag">観光安全</span>
+        </div>
+      </div>
+      <div class="product-card kemono">
+        <div class="product-name">🗺️ KEMONO MAP</div>
+        <div class="product-desc">
+          野生動物の<strong>出没予測×介入最適化</strong>のデータプラットフォーム。AIがいつどこに出没するかを予測し、最小人員・最短経路で対処できるよう自治体をナビゲート。
+        </div>
+        <div style="margin-top:10px;">
+          <span class="product-tag">AI予測</span>
+          <span class="product-tag">SaaS</span>
+          <span class="product-tag">自治体向け</span>
+          <span class="product-tag">データ分析</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏆</span> 4つの確定実績（提案書の核心）</div>
+    <div class="danger-box">
+      <strong>インターンが最初に覚えるべき最重要事項：</strong> skyerには4つの「本物の実運用実績」があります。これ以外（検討中・エントリー中の案件）を「実績」と呼んではいけません。
+    </div>
+    <div class="track-grid">
+      <div class="track-card">
+        <div class="track-num">1</div>
+        <div class="track-name">鳥取砂丘 ドローン観光警備</div>
+        <div class="track-detail">6年間継続運用中。日本最大級の観光地における群衆安全管理・不審者検知・救助誘導をドローンで実施。継続契約という圧倒的な信頼の証。</div>
+      </div>
+      <div class="track-card">
+        <div class="track-num">2</div>
+        <div class="track-name">鳥獣害対策（農地・山林）</div>
+        <div class="track-detail">イノシシ・シカ・カラス等の農業被害防止をドローン追い払い×KEMONO MAP予測で解決。複数自治体で実運用中。被害面積の削減を定量で実証。</div>
+      </div>
+      <div class="track-card">
+        <div class="track-num">3</div>
+        <div class="track-name">カワウ繁殖抑制（湖沼水産）</div>
+        <div class="track-detail">漁業被害の原因となるカワウの繁殖地をドローンで撹乱・繁殖抑制。水産資源保護の観点から自治体と連携した実運用実績。</div>
+      </div>
+      <div class="track-card">
+        <div class="track-num">4</div>
+        <div class="track-name">重量物運搬（Level3.5対応）</div>
+        <div class="track-detail">山間部・離島等の道路アクセス困難エリアへの10kg超物資輸送。Level3.5飛行許可取得済み。悪天候・長距離・複雑地形での実証済み運用実績。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> skyerが「強い」領域 vs「弱い」領域</div>
+    <div style="margin-bottom:12px;font-size:0.86em;color:var(--text2);">案件を見たとき「skyerに向いてるかな？」を判断するための目安です。</div>
+    <div style="margin-bottom:8px;font-size:0.82em;font-weight:700;color:#065f46;">🟢 得意（強い）</div>
+    <div class="domain-grid" style="margin-bottom:16px;">
+      <div class="domain-card go">🐗 鳥獣害対策<div class="domain-label">ド直球</div></div>
+      <div class="domain-card go">🚁 ドローン活用<div class="domain-label">ド直球</div></div>
+      <div class="domain-card go">🌾 農業・農地保護<div class="domain-label">ド直球</div></div>
+      <div class="domain-card go">🏞️ 観光安全管理<div class="domain-label">ド直球</div></div>
+      <div class="domain-card go">📦 物流・運搬<div class="domain-label">直結</div></div>
+      <div class="domain-card go">🛡️ 防災・安全<div class="domain-label">直結</div></div>
+    </div>
+    <div style="margin-bottom:8px;font-size:0.82em;font-weight:700;color:#92400e;">🟡 隣接（アレンジで対応可）</div>
+    <div class="domain-grid" style="margin-bottom:16px;">
+      <div class="domain-card mid">🤖 AI・IoT全般<div class="domain-label">KEMONO MAP</div></div>
+      <div class="domain-card mid">🌳 環境・生態系<div class="domain-label">生物多様性</div></div>
+      <div class="domain-card mid">🏙️ スマートシティ<div class="domain-label">データ活用</div></div>
+      <div class="domain-card mid">🚂 インフラ点検<div class="domain-label">ドローン応用</div></div>
+      <div class="domain-card mid">🌊 水産・漁業<div class="domain-label">カワウ実績</div></div>
+      <div class="domain-card mid">🗾 地方創生<div class="domain-label">地域課題</div></div>
+    </div>
+    <div style="margin-bottom:8px;font-size:0.82em;font-weight:700;color:#991b1b;">🔴 不得意（やらない）</div>
+    <div class="domain-grid">
+      <div class="domain-card ng">💰 金融・フィンテック<div class="domain-label">無関係</div></div>
+      <div class="domain-card ng">👥 人事・HR<div class="domain-label">無関係</div></div>
+      <div class="domain-card ng">🛒 EC・小売<div class="domain-label">無関係</div></div>
+      <div class="domain-card ng">🏥 医療SaaS<div class="domain-label">実績なし</div></div>
+      <div class="domain-card ng">📱 消費者アプリ<div class="domain-label">BtoC外</div></div>
+      <div class="domain-card ng">🏗️ 建設ソフト<div class="domain-label">無関係</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== TAB 3: 作業手順 ========== -->
+<div id="tab-work" class="tab-content">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> 週次作業スケジュール</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;">
+      <div style="background:var(--bg3);border-radius:8px;padding:14px 16px;">
+        <div style="font-weight:800;color:var(--secondary);margin-bottom:8px;">月曜朝（30分）</div>
+        <ul style="font-size:0.85em;line-height:2;padding-left:16px;">
+          <li>トラッカーHTMLを開いて今週の締切を確認</li>
+          <li>新着案件を10〜20件ピックアップ</li>
+          <li>5問スクリーニングを実施</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:14px 16px;">
+        <div style="font-weight:800;color:var(--secondary);margin-bottom:8px;">火〜木（各30分）</div>
+        <ul style="font-size:0.85em;line-height:2;padding-left:16px;">
+          <li>追加案件の選定</li>
+          <li>気になった案件のURL収集</li>
+          <li>詳細情報の確認（要件・締切・金額）</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:14px 16px;">
+        <div style="font-weight:800;color:var(--secondary);margin-bottom:8px;">金曜夕方（15分）</div>
+        <ul style="font-size:0.85em;line-height:2;padding-left:16px;">
+          <li>今週分の選定結果を報告テンプレにまとめる</li>
+          <li>来週締切の案件を要チェックとして記録</li>
+        </ul>
+      </div>
+      <div style="background:#d1fae5;border-radius:8px;padding:14px 16px;">
+        <div style="font-weight:800;color:#065f46;margin-bottom:8px;">緊急対応（随時）</div>
+        <ul style="font-size:0.85em;line-height:2;padding-left:16px;">
+          <li>締切3日以内の案件を発見したら即報告</li>
+          <li>宇佐美さんからSlackで質問が来たら優先対応</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔍</span> STEP 1：案件を見つける方法</div>
+
+    <div style="margin-bottom:14px;">
+      <div class="label label-blue">方法A ／ 最優先</div>
+      <div style="font-weight:700;margin:6px 0 4px;">★毎日確認_PoCリサーチ.html を開く</div>
+      <div style="font-size:0.86em;color:var(--text2);">社内で管理している国内最大級の案件トラッカーです。デスクトップ上の「<strong>★毎日確認_PoCリサーチ.html</strong>」をブラウザで開くと、openステータスの案件が一覧で表示されます。締切順に並んでいるので、上から順番に確認してください。</div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <div class="label label-green">方法B ／ 補完</div>
+      <div style="font-weight:700;margin:6px 0 4px;">定番サイトで新着をチェック</div>
+      <div style="font-size:0.85em;color:var(--text2);line-height:2;">
+        以下のサイトで「ドローン」「AI」「鳥獣」「農業」「スタートアップ 補助金」などで検索：<br>
+        ・<strong>eiicon（エイコン）</strong> — オープンイノベーション最大プラットフォーム<br>
+        ・<strong>Creww（クルー）</strong> — SU×大企業OIマッチング<br>
+        ・<strong>各省庁ページ</strong> — 農水省・国交省・環境省・内閣府SBIR<br>
+        ・<strong>NEDO</strong> — 国内最大規模のディープテック支援機構<br>
+        ・<strong>各自治体のイノベーション担当ページ</strong> — 「◯◯市 実証実験 公募 2026」で検索
+      </div>
+    </div>
+
+    <div>
+      <div class="label label-orange">方法C ／ 追加</div>
+      <div style="font-weight:700;margin:6px 0 4px;">SNS・ニュースレター</div>
+      <div style="font-size:0.85em;color:var(--text2);">Twitterで「#スタートアップ #補助金 #公募」「#ドローン 実証」などを定期的にチェック。Innovators Nippon等のメルマガも有用です。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📝</span> STEP 2：案件情報を記録する（必須項目）</div>
+    <p style="font-size:0.86em;color:var(--text2);margin-bottom:14px;">案件を見つけたら、以下の情報をメモしてください。すべて公式サイトから拾える情報です。</p>
+    <ul class="checklist">
+      <li><strong>案件名</strong> — 正式名称（「令和8年度◯◯事業」など）</li>
+      <li><strong>主催者名</strong> — 省庁・自治体・民間企業の正式名称</li>
+      <li><strong>公式URL</strong> — 公募要項が載っているページのURL</li>
+      <li><strong>締切日時</strong> — 「YYYY-MM-DD HH:MM」の形式で（「2026-07-15 17:00」など）</li>
+      <li><strong>補助金額 / 支援内容</strong> — 「最大◯◯万円」「採択後◯ヶ月の実証支援」など</li>
+      <li><strong>テーマ・対象</strong> — 何を解決したいプログラムか（1〜2行）</li>
+      <li><strong>申請資格</strong> — 「法人のみ」「設立年数制限あり」「県内事業者のみ」など制限事項</li>
+      <li><strong>スクリーニング5問の点数</strong> — タブ4で採点した結果</li>
+      <li><strong>Go / No-Go 判定</strong> — 13点以上→Go、9〜12点→要検討、8点以下→見送り</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚠️</span> STEP 3：即NG（即除外）になる条件</div>
+    <p style="font-size:0.86em;color:var(--text2);margin-bottom:14px;">以下のいずれかに該当する場合は<strong>スクリーニングをするまでもなく除外</strong>してください。時間の無駄です。</p>
+    <table class="ng-table">
+      <tr>
+        <th>除外条件</th>
+        <th>理由</th>
+        <th>種別</th>
+      </tr>
+      <tr>
+        <td>申請主体が自治体のみ（スタートアップ不可）</td>
+        <td>skyerは民間企業なので応募できない</td>
+        <td><span class="ng-tag ng-tag-hard">絶対NG</span></td>
+      </tr>
+      <tr>
+        <td>「設立5年以内」などの設立年数制限に引っかかる</td>
+        <td>要件外は門前払い</td>
+        <td><span class="ng-tag ng-tag-hard">絶対NG</span></td>
+      </tr>
+      <tr>
+        <td>「◯◯県内に事業所があること」等の地域要件（鳥取県以外）</td>
+        <td>事業所設置コストが見合わない場合は除外（微妙な場合は報告）</td>
+        <td><span class="ng-tag ng-tag-soft">要確認</span></td>
+      </tr>
+      <tr>
+        <td>締切が3日以内かつ今日初めて発見した</td>
+        <td>提案書作成に間に合わない（即報告して判断を仰ぐ）</td>
+        <td><span class="ng-tag ng-tag-soft">即報告</span></td>
+      </tr>
+      <tr>
+        <td>スクリーニング5問で8点以下</td>
+        <td>ドメイン・実績・採算のいずれかが大きく外れている</td>
+        <td><span class="ng-tag ng-tag-hard">見送り</span></td>
+      </tr>
+      <tr>
+        <td>金融・EC・医療SaaS・人事・BtoCアプリがテーマ</td>
+        <td>skyerのドメインと無関係</td>
+        <td><span class="ng-tag ng-tag-hard">絶対NG</span></td>
+      </tr>
+      <tr>
+        <td>すでにエントリー済み / 提出済みの案件</td>
+        <td>重複エントリー防止</td>
+        <td><span class="ng-tag ng-tag-hard">スキップ</span></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ========== TAB 4: 選定基準 ========== -->
+<div id="tab-screening" class="tab-content">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> 5問スクリーニング — Go/No-Go 即判定ツール</div>
+    <div style="font-size:0.85em;color:var(--text2);margin-bottom:18px;">
+      URLを確認したら、以下の5問に答えてください。<strong>13点以上→即Go ／ 9〜12点→条件付きGo（要相談） ／ 8点以下→見送り</strong>
+    </div>
+
+    <div class="screen-question">
+      <div class="screen-q-num">Q1</div>
+      <div class="screen-q-text">事業ドメイン適合 — skyerの強みが活かせる領域か？</div>
+      <div class="screen-options">
+        <button class="screen-opt" onclick="selectOpt(this,'q1',3)"><span class="screen-score">3点</span>🟢 直結（ドローン・鳥獣・農業・物流・安全管理・観光）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q1',2)"><span class="screen-score">2点</span>🟡 隣接（IoT・AI・環境・地域課題・防災・モビリティ）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q1',1)"><span class="screen-score">1点</span>🔴 遠い（金融・人事・医療SaaS・EC等）</button>
+      </div>
+    </div>
+
+    <div class="screen-question">
+      <div class="screen-q-num">Q2</div>
+      <div class="screen-q-text">実績転用性 — 4実績（砂丘警備・鳥獣対策・カワウ・重量物）のどれかを提案書で使えるか？</div>
+      <div class="screen-options">
+        <button class="screen-opt" onclick="selectOpt(this,'q2',3)"><span class="screen-score">3点</span>🟢 そのまま使える（同じ課題・同じ技術領域）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q2',2)"><span class="screen-score">2点</span>🟡 アレンジすれば使える（一部転用可能）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q2',1)"><span class="screen-score">1点</span>🔴 使いにくい（skyerの実績がない領域）</button>
+      </div>
+    </div>
+
+    <div class="screen-question">
+      <div class="screen-q-num">Q3</div>
+      <div class="screen-q-text">提出負荷 — 書類準備の手間はどのくらいか？</div>
+      <div class="screen-options">
+        <button class="screen-opt" onclick="selectOpt(this,'q3',3)"><span class="screen-score">3点</span>🟢 軽い（フォーム入力のみ、またはA4 2〜3枚）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q3',2)"><span class="screen-score">2点</span>🟡 中程度（A4 5〜10枚＋添付資料程度）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q3',1)"><span class="screen-score">1点</span>🔴 重い（15枚超・事前説明会必須・自治体連携同意書が必要）</button>
+      </div>
+    </div>
+
+    <div class="screen-question">
+      <div class="screen-q-num">Q4</div>
+      <div class="screen-q-text">予算・採算性 — 採択された場合の規模感は？</div>
+      <div class="screen-options">
+        <button class="screen-opt" onclick="selectOpt(this,'q4',3)"><span class="screen-score">3点</span>🟢 高い（採択額500万円超 or 継続事業契約の見込み）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q4',2)"><span class="screen-score">2点</span>🟡 中程度（100〜500万円、またはネットワーク・PR価値が高い）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q4',1)"><span class="screen-score">1点</span>🔴 低い（100万円未満 or 経費補填のみで実利が薄い）</button>
+      </div>
+    </div>
+
+    <div class="screen-question">
+      <div class="screen-q-num">Q5</div>
+      <div class="screen-q-text">競争優位性 — このプログラムでskyerが勝てる可能性は？</div>
+      <div class="screen-options">
+        <button class="screen-opt" onclick="selectOpt(this,'q5',3)"><span class="screen-score">3点</span>🟢 高い（地方×ドローン×鳥獣で明確な独自性・他社に真似できない）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q5',2)"><span class="screen-score">2点</span>🟡 中程度（競合は多いが差別化の余地あり）</button>
+        <button class="screen-opt" onclick="selectOpt(this,'q5',1)"><span class="screen-score">1点</span>🔴 低い（大手・専業他社が多数参入、skyerの独自性が出しにくい）</button>
+      </div>
+    </div>
+
+    <div class="result-box" id="screenResult">
+      <div style="color:var(--text2);font-size:0.88em;">5問すべて選択すると判定が出ます（合計 15点満点）</div>
+    </div>
+
+    <div style="margin-top:16px;font-size:0.83em;color:var(--text2);">
+      ※ このツールは選定の補助です。「条件付きGo（9〜12点）」の場合は自己判断せず、理由を書いて宇佐美さんに確認してください。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">💡</span> 判定基準の補足説明</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#d1fae5;border-radius:8px;padding:14px 16px;">
+        <strong style="color:#065f46;">🟢 即Go（13〜15点）</strong><br>
+        <span style="font-size:0.85em;color:#065f46;">報告書に「Go推奨」と書いてURLを送ってください。宇佐美さんが即提案書を作ります。</span>
+      </div>
+      <div style="background:#fef3c7;border-radius:8px;padding:14px 16px;">
+        <strong style="color:#92400e;">🟡 要検討（9〜12点）</strong><br>
+        <span style="font-size:0.85em;color:#92400e;">「どの設問で点が低かったか」と「何が引っかかったか」を一言添えて報告してください。宇佐美さんが最終判断します。</span>
+      </div>
+      <div style="background:#fee2e2;border-radius:8px;padding:14px 16px;">
+        <strong style="color:#991b1b;">🔴 見送り（8点以下）</strong><br>
+        <span style="font-size:0.85em;color:#991b1b;">報告書の「見送りリスト」に案件名と理由を1行書いて終わりです。宇佐美さんへの確認は不要です。</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== TAB 5: 報告方法 ========== -->
+<div id="tab-report" class="tab-content">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📤</span> 週次報告テンプレート</div>
+    <div style="font-size:0.86em;color:var(--text2);margin-bottom:12px;">毎週金曜日にSlack / メールで以下のフォーマットで報告してください。コピーして使ってください。</div>
+    <div class="template-box" id="weeklyTpl">
+===== 案件選定週次報告 =====
+報告日：YYYY-MM-DD（金）
+担当：〇〇
+
+【即Go案件（13点以上）】
+1. 案件名：
+   主催：
+   締切：YYYY-MM-DD HH:MM
+   金額：最大〇〇万円
+   URL：
+   スコア：〇点 / 15点
+   推薦理由：（1〜2行でskyerとの適合ポイント）
+
+2. 案件名：
+   ※複数あれば同じ形式で追記
+
+【要検討案件（9〜12点）】
+1. 案件名：
+   主催：
+   締切：YYYY-MM-DD HH:MM
+   URL：
+   スコア：〇点 / 15点
+   懸念ポイント：（どのQ で点が低かったか、何が引っかかるか）
+
+【今週の見送り案件】（案件名と理由のみ）
+・〇〇補助金 → 理由：事業ドメインが無関係（金融SaaS）
+・〇〇プログラム → 理由：自治体申請主体限定
+
+【来週締切要注意】
+・YYYY-MM-DD ：〇〇案件（申請期限まで△日）
+
+以上
+<button class="copy-btn" onclick="copyText('weeklyTpl')">コピー</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🚨</span> 緊急報告テンプレート（締切3日以内を発見した場合）</div>
+    <div class="danger-box">締切3日以内の案件を発見した場合は、週次報告を待たずに<strong>今すぐ</strong>連絡してください。</div>
+    <div class="template-box" id="urgentTpl">
+【緊急】締切間近の案件を発見しました
+
+案件名：
+主催：
+締切：YYYY-MM-DD HH:MM（あと〇日）
+金額：最大〇〇万円
+URL：
+スコア：〇点 / 15点
+概要：（2〜3行で何を解決するプログラムか）
+skyerとの適合ポイント：（なぜGoだと思ったか）
+
+⚠️ 締切まで〇日のため至急確認をお願いします
+<button class="copy-btn" onclick="copyText('urgentTpl')">コピー</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> 報告時のチェックリスト</div>
+    <ul class="checklist">
+      <li>案件名は正式名称で記載（略称NG）</li>
+      <li>URLは公募要項が載っているページのURL（トップページNG）</li>
+      <li>締切日時は「YYYY-MM-DD HH:MM」形式（例：2026-07-15 17:00）</li>
+      <li>スコアの根拠（どのQで何点をつけたか）が言語化されている</li>
+      <li>「要検討」案件は懸念ポイントが明記されている</li>
+      <li>すでに報告済み・エントリー済みの案件が含まれていない</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ========== TAB 6: FAQ ========== -->
+<div id="tab-faq" class="tab-content">
+
+  <div class="card">
+    <div class="card-title"><span class="icon">❓</span> よくある疑問・ Q&amp;A</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 案件を選ぶのが合っているか自信がありません。間違えたらどうなりますか？</div>
+      <div class="faq-a">大丈夫です。インターンが「Go」と言った案件を宇佐美さんが最終確認してからエントリーします。あなたの判断が最終決定になるわけではありません。迷ったら「要検討」にして懸念点を書いてください。スクリーニングツールの点数がそのまま判断できるので、答えが明らかに外れることはほとんどありません。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 案件の「ドメイン」がよく分からないとき、どう判断すればいいですか？</div>
+      <div class="faq-a">「会社・製品」タブの「強い領域 vs 弱い領域」一覧と照らし合わせてください。それでも判断がつかない場合は、「要検討」で報告してください。宇佐美さんに「テーマが◯◯なのですが、これはGoですか？」と一言添えれば即答してもらえます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 「補助金」「OI（オープンイノベーション）」「実証支援」の違いが分かりません。</div>
+      <div class="faq-a">選定作業においては区別不要です。すべて「skyerがお金や支援をもらえる可能性があるプログラム」として同じ基準でスクリーニングしてください。区別が必要なのは提案書を書く段階で、その作業はインターンの担当外です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 締切が1ヶ月以上先の案件もGoリストに入れていいですか？</div>
+      <div class="faq-a">はい、入れてください。締切までの日数は選定基準に含まれていません（「締切3日以内は緊急報告」というルールはありますが、先のものを無視するルールではありません）。締切が遠い案件は「来月に確認」というメモを添えて報告するか、翌週の報告に回してください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 公募要項のPDFが長すぎて全部読めません。どこを見ればいいですか？</div>
+      <div class="faq-a">以下の順番でチェックすれば3〜5分で済みます：①事業概要（何をしたいか）→②申請資格（誰が出せるか）→③採択金額（いくらもらえるか）→④締切（いつまでか）→⑤必要書類（どんな書類が要るか）。この5点だけ押さえれば選定基準に答えられます。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 同じ案件が複数のサイトに掲載されていました。どれを使えばいいですか？</div>
+      <div class="faq-a">主催者（省庁・自治体・企業）の公式ページのURLを使ってください。eiicon/Creww等の転載ページは情報が古い場合があります。公式ページが見つからない場合は「公式URL不明」と書いて報告してください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 「事前説明会が必須」と書いてあります。これはQ3で「重い（1点）」にすべきですか？</div>
+      <div class="faq-a">はい、提出負荷が重くなるので基本的には1点としてください。ただし説明会がオンライン開催かつ30分以内であれば2点でも問題ありません。どちらか判断が難しければ「説明会必須（オンライン可能かどうか不明）」と懸念ポイントに記載してください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. トラッカーHTML（★毎日確認_PoCリサーチ.html）に載っていない案件を発見しました。どうすればいいですか？</div>
+      <div class="faq-a">報告テンプレートにそのまま記載して送ってください。「トラッカーにない新規発見案件」と一言添えると宇佐美さんがトラッカーに追加します。新規発見は大歓迎です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Q. 1週間で何件くらい選定すればいいですか？</div>
+      <div class="faq-a">目安はGo案件3〜5件 / 週です。見送り件数は多くて構いません（よく選別できている証拠です）。数ではなく「本当にGoな案件を見逃さない」ことが最重要です。</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📞</span> 連絡先・相談先</div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.88em;">
+      <tr>
+        <td style="padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:1px solid var(--border);width:30%;">CEO（宇佐美）</td>
+        <td style="padding:10px 12px;border-bottom:1px solid var(--border);">Slack / メール：info@skyer.biz</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;font-weight:700;color:var(--text2);border-bottom:1px solid var(--border);">判断に迷った時</td>
+        <td style="padding:10px 12px;border-bottom:1px solid var(--border);">「要検討」で報告 + 懸念ポイントを記載 → CEOが判断</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;font-weight:700;color:var(--text2);">緊急時</td>
+        <td style="padding:10px 12px;">締切3日以内 → 即Slack DM or 電話</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const scores = {};
+function selectOpt(el, q, score) {
+  el.closest('.screen-options').querySelectorAll('.screen-opt').forEach(o => {
+    o.classList.remove('selected-go','selected-mid','selected-ng');
+  });
+  if (score === 3) el.classList.add('selected-go');
+  else if (score === 2) el.classList.add('selected-mid');
+  else el.classList.add('selected-ng');
+  scores[q] = score;
+  updateResult();
+}
+
+function updateResult() {
+  const keys = ['q1','q2','q3','q4','q5'];
+  if (!keys.every(k => scores[k])) return;
+  const total = keys.reduce((s,k) => s + scores[k], 0);
+  const box = document.getElementById('screenResult');
+  let html, bg;
+  if (total >= 13) {
+    bg = '#d1fae5'; color = '#065f46';
+    html = `<div style="font-size:2em;font-weight:900;color:#059669;">${total}点 / 15点</div>
+            <div style="font-size:1.2em;font-weight:800;color:#065f46;margin-top:6px;">✅ 即Go — 報告書に追加してください</div>
+            <div style="font-size:0.83em;color:#065f46;margin-top:6px;">宇佐美さんに「Go推奨」として報告。提案書は自動生成されます。</div>`;
+  } else if (total >= 9) {
+    bg = '#fef3c7'; color = '#92400e';
+    html = `<div style="font-size:2em;font-weight:900;color:#d97706;">${total}点 / 15点</div>
+            <div style="font-size:1.2em;font-weight:800;color:#92400e;margin-top:6px;">🟡 要検討 — 懸念ポイントを添えて報告</div>
+            <div style="font-size:0.83em;color:#92400e;margin-top:6px;">どのQで点が低かったかを書いてください。宇佐美さんが最終判断します。</div>`;
+  } else {
+    bg = '#fee2e2'; color = '#991b1b';
+    html = `<div style="font-size:2em;font-weight:900;color:#dc2626;">${total}点 / 15点</div>
+            <div style="font-size:1.2em;font-weight:800;color:#991b1b;margin-top:6px;">🔴 見送り — 報告書の見送りリストへ</div>
+            <div style="font-size:0.83em;color:#991b1b;margin-top:6px;">見送りリストに案件名と理由を1行書くだけでOKです。</div>`;
+  }
+  box.style.background = bg;
+  box.style.borderColor = color;
+  box.innerHTML = html;
+}
+
+function copyText(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText.replace('コピー','').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    btn.textContent = '✓ コピー済み';
+    setTimeout(() => btn.textContent = 'コピー', 2000);
+  });
+}
+
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const isOpen = answer.style.display === 'block';
+  answer.style.display = isOpen ? 'none' : 'block';
+  el.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
